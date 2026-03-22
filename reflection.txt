@@ -1,0 +1,17 @@
+Structs vs Classes:
+
+Python makes creating classes super easy. You just define the class, write your methods, and Python automatically handles storing the object’s data and connecting methods to it. Calling a method automatically passes self, and Python figures out which function to run depending on the object type.
+
+In C, it’s more manual. I had to create a Character struct with data fields and function pointers for methods. Every function needed an explicit Character* self parameter, like Python’s self. I also had to set up the function pointers in the constructor, and make sure they got overridden for derived types. Essentially, Python is doing all of this behind the scenes every time you make a class or call a method. Doing it in C made me realize exactly what’s happening under the hood when I use classes in Python.
+
+Inheritance Implementation:
+
+In Python, inheritance is just built in. A subclass automatically gets all the parent’s attributes and methods, and you can override anything easily by redefining it.
+
+In C, I had to simulate inheritance using composition. The Warrior and Mage structs each had a Character struct as the first member. This lets us cast the derived struct to a Character* and still call methods through function pointers. Overriding a method meant explicitly replacing the function pointer in the derived struct’s constructor. Python does all this automatically, but doing it in C shows exactly how inheritance works at the memory level. It’s more work, but it gives you total control over how the data is stored and how methods are called.
+
+Understanding OOP Mechanics:
+
+The main trick for polymorphism is function pointers. Each struct stores a pointer to the function that should run when attack is called. This way, calling attack on a Character* can do different things depending on whether it points to a base Character, a Warrior, or a Mage.
+
+This assignment shows why systems programmers use these patterns. In low-level programming, embedded systems, or game engines, there’s often no built-in class system. Using structs with function pointers lets you organize complex data, reuse behavior, and get polymorphism without language support. Doing this in C gave me a much better understanding of what’s really going on when Python handles classes and inheritance automatically.
